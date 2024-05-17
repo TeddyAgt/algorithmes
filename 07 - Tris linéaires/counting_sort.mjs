@@ -18,6 +18,7 @@ function countingSort(array) {
 
   // Initialiser le tableau de comptage
   const countingArray = new Array(max + 1);
+
   for (let i = 0; i < countingArray.length; i++) {
     countingArray[i] = 0;
   }
