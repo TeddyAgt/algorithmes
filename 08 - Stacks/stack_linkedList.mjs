@@ -1,6 +1,6 @@
 import { LinkedList } from "../04 - Les listes chaînées/linked_list.mjs";
 
-class Stack {
+export class Stack {
   constructor() {
     this.list = new LinkedList();
   }

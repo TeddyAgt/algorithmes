@@ -1,4 +1,4 @@
-class Stack {
+export class Stack {
   constructor(size) {
     this.arr = new Array(size);
     this.top = -1;
@@ -6,11 +6,11 @@ class Stack {
   }
 
   push(value) {
-    if (top >= size - 1) {
+    if (this.top >= this.size - 1) {
       throw new Error("Error: Stack Overflow");
     }
 
-    top++;
+    this.top++;
     this.arr[this.top] = value;
   }
 
