@@ -127,4 +127,9 @@ export class LinkedList {
     }
     console.log(`null (${this.size})`);
   }
+
+  clear() {
+    this.head = null;
+    this.size = 0;
+  }
 }
