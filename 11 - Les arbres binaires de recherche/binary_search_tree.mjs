@@ -41,11 +41,39 @@ class BinarySearchTree {
 
   delete(key) {}
 
-  min() {}
+  min() {
+    if (!this.root) return null;
+    let current = this.root;
 
-  max() {}
+    while (current.left) {
+      current = current.left;
+    }
+    return current;
+  }
 
-  search(key) {}
+  max() {
+    if (!this.root) return null;
+    let current = this.root;
+
+    while (current.right) {
+      current = current.right;
+    }
+    return current;
+  }
+
+  search(key) {
+    if (!this.root) return null;
+    let current = this.root;
+
+    while (current && current.key !== key) {
+      if (key < current.key) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+    return current;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -60,3 +88,6 @@ bst.insert(8);
 bst.insert(74);
 bst.insert(38);
 console.log(bst);
+console.log(bst.search(74));
+console.log(bst.min());
+console.log(bst.max());
