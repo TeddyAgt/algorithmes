@@ -114,6 +114,42 @@ class BinarySearchTree {
     }
     return current;
   }
+
+  preOrder() {
+    this.preOrderWalk(this.root);
+  }
+
+  preOrderWalk(node) {
+    if (node) {
+      console.log(node.key);
+      this.preOrderWalk(node.left);
+      this.preOrderWalk(node.right);
+    }
+  }
+
+  inOrder() {
+    this.inOrderWalk(this.root);
+  }
+
+  inOrderWalk(node) {
+    if (node) {
+      this.inOrderWalk(node.left);
+      console.log(node.key);
+      this.inOrderWalk(node.right);
+    }
+  }
+
+  postOrder() {
+    this.postOrderWalk(this.root);
+  }
+
+  postOrderWalk(node) {
+    if (node) {
+      this.postOrderWalk(node.left);
+      this.postOrderWalk(node.right);
+      console.log(node.key);
+    }
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -137,3 +173,5 @@ bst.delete(1);
 console.log(bst.search(1));
 console.log(bst.search(3));
 console.log(bst);
+
+bst.postOrder();
