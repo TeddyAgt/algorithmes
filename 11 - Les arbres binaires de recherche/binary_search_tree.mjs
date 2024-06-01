@@ -1,3 +1,5 @@
+import { Queue } from "../09 - Queues/queue_linkedList.mjs";
+
 class Node {
   constructor(key) {
     this.key = key;
@@ -150,6 +152,23 @@ class BinarySearchTree {
       console.log(node.key);
     }
   }
+
+  breadthFirstSearch() {
+    const queue = new Queue();
+    queue.enqueue(this.root);
+    while (!queue.isEmpty()) {
+      const node = queue.dequeue();
+      if (node) {
+        console.log(node.key);
+        queue.enqueue(node.left);
+        queue.enqueue(node.right);
+      }
+    }
+  }
+
+  print() {
+    console.log(JSON.stringify(this.root, null, 2));
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -174,4 +193,4 @@ console.log(bst.search(1));
 console.log(bst.search(3));
 console.log(bst);
 
-bst.postOrder();
+bst.breadthFirstSearch();
