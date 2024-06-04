@@ -147,14 +147,14 @@ class RedBlackTree {
         } else {
           let minNodeFromRight = this.getMinFromNode(nodeToDelete.right);
           nodeToDelete.key = minNodeFromRight.key;
-          nodeToDelete = minNodeFromRight;
+          nodeToDelete = minNodeFromRight();
         }
       }
 
       if (nodeToDelete.color === "black") {
         this.deleteFix(nodeToDelete);
       }
-      deleteNodeFromParent(nodeToDelete);
+      this.deleteNodeFromParent(nodeToDelete);
     }
   }
 
@@ -292,7 +292,7 @@ class RedBlackTree {
   search(key) {
     let current = this.root;
 
-    while (current !== this.NilNode && current.key !== key) {
+    while (current !== this.NilNode) {
       if (key < current.key) {
         current = current.left;
       } else if (key > current.key) {
