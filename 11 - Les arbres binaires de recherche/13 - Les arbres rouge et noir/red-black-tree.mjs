@@ -105,6 +105,141 @@ class RedBlackTree {
     }
   }
 
+  getMinFromNode(node) {
+    while (node.left !== this.NilNode) {
+      node = node.left;
+    }
+    return node;
+  }
+
+  deleteNodeFromParent(node) {
+    if (node.parent === this.NilNode) {
+      this.root = this.NilNode;
+    } else if (node.parent.left === node) {
+      node.parent.left = null;
+    } else {
+      node.parent.right = null;
+    }
+  }
+
+  delete(key) {
+    const node = this.search(key);
+    if (!node) {
+      return null;
+    } else {
+      let nodeToDelete = node;
+
+      while (
+        nodeToDelete.left !== this.NilNode ||
+        nodeToDelete.right !== this.NilNode
+      ) {
+        // À ce stade, on a soit un enfin à gauche, soit un enfant à droite, soit deux enfants
+        // Si on a un enfant à droite:
+        if (nodeToDelete.left === this.NilNode) {
+          nodeToDelete.key = nodeToDelete.right.key;
+          nodeToDelete = nodeToDelete.right;
+          // Si on a un enfant à gauche:
+        } else if (nodeToDelete.right === this.NilNode) {
+          nodeToDelete.key = nodeToDelete.left.key;
+          nodeToDelete = nodeToDelete.left;
+
+          // Si on a deux enfants:
+        } else {
+          let minNodeFromRight = this.getMinFromNode(nodeToDelete.right);
+          nodeToDelete.key = minNodeFromRight.key;
+          nodeToDelete = minNodeFromRight;
+        }
+      }
+
+      if (nodeToDelete.color === "black") {
+        this.deleteFix(nodeToDelete);
+      }
+      deleteNodeFromParent(nodeToDelete);
+    }
+  }
+
+  getSibling(node) {
+    if (node.parent.left === node) {
+      return node.parent.right;
+    }
+    {
+      return node.parent.left;
+    }
+  }
+
+  getFarSiblingSon(node) {
+    if (node.parent.left === node) {
+      return node.parent.right.right;
+    } else {
+      return node.parent.left.left;
+    }
+  }
+
+  getCloseSiblingSon(node) {
+    if (node.parent.left === node) {
+      return node.parent.right.left;
+    } else {
+      return node.parent.left.right;
+    }
+  }
+
+  deleteFix(nodeToDelete) {
+    if (nodeToDelete === this.root) {
+      // cas A
+      return;
+    } else {
+      let sibling = this.getSibling(nodeToDelete);
+      let parent = nodeToDelete.parent;
+      if (
+        sibling.color === "black" &&
+        sibling.left.color === "black" &&
+        sibling.right.color === "black"
+      ) {
+        // cas B
+        sibling.color = "red";
+        if (parent.color === "red") {
+          parent.color = "black";
+        } else {
+          this.deleteFix(parent);
+        }
+      } else if (sibling.color === "red") {
+        // cas C
+        parent.color = "red";
+        sibling.color = "black";
+        if (parent.left === nodeToDelete) {
+          this.rotateLeft(parent);
+        } else {
+          this.rotateRight(parent);
+        }
+        this.deleteFix(nodeToDelete);
+      } else {
+        let farSiblingSon = this.getFarSiblingSon(nodeToDelete);
+        if (farSiblingSon.color === "black") {
+          // cas D
+          const closeSiblingSon = this.getCloseSiblingSon(nodeToDelete);
+          closeSiblingSon.color = "black";
+          sibling.color = "red";
+          if (nodeToDelete === parent.left) {
+            this.rotateRight(sibling);
+          } else {
+            this.rotateLeft(sibling);
+          }
+        }
+        // cas E
+        sibling = this.getSibling(nodeToDelete);
+        farSiblingSon = this.getFarSiblingSon(nodeToDelete);
+        sibling.color = parent.color;
+        farSiblingSon.color = "black";
+        parent.color = "black";
+        if (nodeToDelete === parent.left) {
+          this.rotateLeft(parent);
+        } else {
+          this.rotateRight(parent);
+        }
+      }
+    }
+  }
+
   rotateLeft(node) {
     const parent = node.parent;
     nodeRight = node.right;
@@ -155,17 +290,18 @@ class RedBlackTree {
   }
 
   search(key) {
-    if (!this.root) return null;
     let current = this.root;
 
-    while (current && current.key !== key) {
+    while (current !== this.NilNode && current.key !== key) {
       if (key < current.key) {
         current = current.left;
-      } else {
+      } else if (key > current.key) {
         current = current.right;
+      } else {
+        return current;
       }
     }
-    return current;
+    return null;
   }
 
   print() {
