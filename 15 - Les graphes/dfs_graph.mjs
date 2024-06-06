@@ -21,4 +21,5 @@ function deepFirstSearch(graph, vertex) {
       }
     }
   }
+  return results;
 }
