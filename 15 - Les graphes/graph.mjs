@@ -1,4 +1,4 @@
-class Graph {
+export class Graph {
   constructor() {
     this.adjacencyList = {};
   }
@@ -42,25 +42,29 @@ class Graph {
       );
     }
   }
+
+  getVertex(vertex) {
+    return this.adjacencyList[vertex];
+  }
 }
 
-const graph = new Graph();
+// const graph = new Graph();
 
-graph.addVertex(1);
-graph.addVertex(2);
-graph.addVertex(3);
-graph.addVertex(4);
-graph.addVertex(5);
-graph.addVertex(6);
-graph.addVertex(7);
+// graph.addVertex(1);
+// graph.addVertex(2);
+// graph.addVertex(3);
+// graph.addVertex(4);
+// graph.addVertex(5);
+// graph.addVertex(6);
+// graph.addVertex(7);
 
-graph.addEdge(1, 2);
-graph.addEdge(1, 4);
-graph.addEdge(2, 3);
-graph.addEdge(3, 6);
-graph.addEdge(6, 5);
-graph.addEdge(6, 7);
-graph.addEdge(5, 4);
-graph.addEdge(7, 4);
+// graph.addEdge(1, 2);
+// graph.addEdge(1, 4);
+// graph.addEdge(2, 3);
+// graph.addEdge(3, 6);
+// graph.addEdge(6, 5);
+// graph.addEdge(6, 7);
+// graph.addEdge(5, 4);
+// graph.addEdge(7, 4);
 
-console.log(graph);
+// console.log(graph);
