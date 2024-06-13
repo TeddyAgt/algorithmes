@@ -28,6 +28,12 @@ export class WeightedGraph {
     }
   }
 
+  addDirectedEdge(vertex1, vertex2, weight) {
+    if (this.adjacencyList[vertex1] && this.adjacencyList[vertex2]) {
+      this.adjacencyList[vertex1].push(new Edge(vertex2, weight));
+    }
+  }
+
   removeVertex(vertex) {
     while (this.adjacencyList[vertex].length) {
       const adjacencyVertex = this.adjacencyList[vertex].pop();
@@ -46,6 +52,14 @@ export class WeightedGraph {
       );
       this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(
         (v) => v.vertex !== vertex1
+      );
+    }
+  }
+
+  removeDirectedEdge(vertex1, vertex2) {
+    if (this.adjacencyList[vertex1] && this.adjacencyList[vertex2]) {
+      this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
+        (v) => v.vertex !== vertex2
       );
     }
   }
