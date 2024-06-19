@@ -1,7 +1,7 @@
 export class QueueEvent {
-  constructor(vertex, distance) {
+  constructor(vertex, priority) {
     this.vertex = vertex;
-    this.distance = distance;
+    this.priority = priority;
   }
 }
 
@@ -37,7 +37,7 @@ export class PriorityQueue {
     let parentIndex = Math.floor((childIndex - 1) / 2);
     while (
       childIndex > 0 &&
-      this.heap[childIndex].distance < this.heap[parentIndex].distance
+      this.heap[childIndex].priority < this.heap[parentIndex].priority
     ) {
       this.swap(childIndex, parentIndex);
       childIndex = parentIndex;
@@ -63,14 +63,14 @@ export class PriorityQueue {
     while (
       parent < length &&
       ((left < length &&
-        this.heap[left].distance < this.heap[parent].distance) ||
+        this.heap[left].priority < this.heap[parent].priority) ||
         (right < length &&
-          this.heap[right].distance < this.heap[parent].distance))
+          this.heap[right].priority < this.heap[parent].priority))
     ) {
       let min;
       if (right >= length) {
         min = left;
-      } else if (this.heap[left].distance < this.heap[right].distance) {
+      } else if (this.heap[left].priority < this.heap[right].priority) {
         min = left;
       } else {
         min = left;
